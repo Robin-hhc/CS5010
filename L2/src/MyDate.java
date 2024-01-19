@@ -1,8 +1,8 @@
 
 public class MyDate{
-    int day;
-    int month;
-    int year;
+    private int day;
+    private int month;
+    private int year;
     /**
      * Constructs a {@code MyDate} object.
      *
@@ -14,24 +14,21 @@ public class MyDate{
         if (year < 0) {
             throw new IllegalArgumentException("Year not valid");
         }
-        if (month < 0 || month > 12) {
-            throw new IllegalArgumentException("Month not valid");
-        }
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-            if (day < 0 || day > 31) {
+            if (day <= 0 || day > 31) {
                 throw new IllegalArgumentException("Day not valid");
             }
         } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-            if (day < 0 || day > 30) {
+            if (day <= 0 || day > 30) {
                 throw new IllegalArgumentException("Day not valid");
             }
         } else if (month == 2) {
             if (year % 4 == 0 && (year % 100 != 0 || (year % 100 == 0 && year % 400 == 0))) {
-                if (day < 0 || day > 29) {
+                if (day <= 0 || day > 29) {
                     throw new IllegalArgumentException("Day not valid");
                 }
             } else {
-                if (day < 0 || day > 28) {
+                if (day <= 0 || day > 28) {
                     throw new IllegalArgumentException("Day not valid");
                 }
             }
@@ -109,13 +106,13 @@ public class MyDate{
         String dayStr = String.valueOf(this.day);
         String monthStr = String.valueOf(this.month);
         String yearStr = String.valueOf(this.year);
-        while (dayStr.length() < 4) {
+        while (dayStr.length() < 2) {
             dayStr = "0"+dayStr;
         }
         while (monthStr.length() < 2) {
             monthStr = "0"+monthStr;
         }
-        while (yearStr.length() < 2) {
+        while (yearStr.length() < 4) {
             yearStr = "0"+yearStr;
         }
         return yearStr + "-" + monthStr + "-" + dayStr;
