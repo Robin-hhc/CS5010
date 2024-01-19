@@ -1,7 +1,7 @@
 public class Vector3D {
-  public double x;
-  public double y;
-  public double z;
+  private double x;
+  private double y;
+  private double z;
 
   /**
    * Construct a Vector3D object that has 3 vector degree x, y, z.
@@ -66,8 +66,12 @@ public class Vector3D {
    *
    * @return  the new normalize vector3D object
    */
-  public Vector3D Normalize() throws IllegalStateException{
+  public Vector3D normalize() throws IllegalStateException{
     double mag = this.getMagnitude();
-    return new Vector3D(this.x/mag, this.y/mag, this.z/mag);
+    if (mag == 0) {
+      throw new IllegalStateException("Magnitude can not be Zero");
+    } else {
+      return new Vector3D(this.x/mag, this.y/mag, this.z/mag);
+    }
   }
 }

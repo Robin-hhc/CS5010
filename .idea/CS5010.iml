@@ -5,7 +5,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/L1/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/L1/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/L2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L2/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/P2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/P2/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/hw1/box" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/L1/out" />
     </content>
