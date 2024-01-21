@@ -33,5 +33,9 @@ public interface BoxSet {
      */
     int [][] getBoxes();
 
+    /**
+     * Get the number of rectangles in this set.
+     * @return an int as the number of rectangles in this set.
+     */
     int size();
 }
