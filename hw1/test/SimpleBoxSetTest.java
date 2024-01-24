@@ -28,25 +28,26 @@ public class SimpleBoxSetTest {
     testSize.add(5, 10, 2, 3);
   }
 
-  @Test
-  public void subtractTest() {
-    //    Test equal
-
-    return;
-  }
 
   @Test
-  public void addTest() {
+  public void addSubtractTest() {
     int[][] except;
-    //    Test exist rectangle
-    System.out.println("Test exist rectangle");
+    // Test exist rectangle
     testAdd.add(0, 0, 5, 10);
     except = new int[][] {{5, 10, 2, 3}, {0, 0, 5, 10}};
     assertEquals(except, testAdd.getBoxes());
 
-//    testAdd.add(-1, -1, 8, 14);
-//    except = new int[][] {{-1, -1, 8, 14}};
-//    assertEquals(except, testAdd.getBoxes());
+    // Test all four edges overlap
+    testAdd.add(1, 1, 3, 8);
+    except = new int[][] {{5, 10, 2, 3}, {0, 0, 1, 10}, {4, 0, 1, 10}, {1, 0, 3, 1}, {1, 9, 3, 1}, {1, 1, 3, 8}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test only upper width edge non-overlaps
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, 1, 3, 15);
+    except = new int[][] {{0, 0, 1, 10}, {4, 0, 1, 10}, {1, 0, 3, 1}, {1, 1, 3, 15}};
+    assertEquals(except, testAdd.getBoxes());
   }
 
   @Test

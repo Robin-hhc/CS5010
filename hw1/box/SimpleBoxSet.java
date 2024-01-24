@@ -21,7 +21,7 @@ public class SimpleBoxSet implements box.BoxSet {
     this.subtract(x, y, width, height);
     this.boxes.add(new int[] {x, y, width, height});
     for (int[] rec : this.boxes) {
-      System.out.printf("(%d, %d, %d, %d)", rec[0], rec[1], rec[2], rec[3]);
+      System.out.printf("{%d, %d, %d, %d}, ", rec[0], rec[1], rec[2], rec[3]);
     }
     System.out.println("");
     System.out.println("====================================================");
