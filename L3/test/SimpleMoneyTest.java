@@ -47,17 +47,17 @@ public class SimpleMoneyTest {
   @Test
   public void testAddMoney() {
     SimpleMoney test = new SimpleMoney(1, 1);
-    assertEquals(101.91, test.add(addOn).getDecimalValue());
+    assertEquals(101.91, test.add(addOn).getDecimalValue(), 0);
     test = new SimpleMoney(1, 11);
-    assertEquals(102.01, test.add(addOn).getDecimalValue());
+    assertEquals(102.01, test.add(addOn).getDecimalValue(), 0);
   }
 
   @Test
   public void testAdd() {
     SimpleMoney test = new SimpleMoney(1, 1);
-    assertEquals(101.91, test.add(100, 90).getDecimalValue());
+    assertEquals(101.91, test.add(100, 90).getDecimalValue(), 0);
     test = new SimpleMoney(1, 11);
-    assertEquals(102.01, test.add(100, 90).getDecimalValue());
+    assertEquals(102.01, test.add(100, 90).getDecimalValue(), 0);
   }
 
   @Test

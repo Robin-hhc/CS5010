@@ -47,7 +47,7 @@ public class SimpleMoney implements Money{
   public Money add(Money other) {
     double otherAmount = other.getDecimalValue();
     int newDollar = this.dollar + (int) otherAmount;
-    int newCent = this.cent + (int) otherAmount*100%100;
+    int newCent = this.cent + (int) (otherAmount*100)%100;
     if (newCent >= 100) {
       newCent = newCent - 100;
       newDollar++;
@@ -100,6 +100,6 @@ public class SimpleMoney implements Money{
    */
   @Override
   public String toString() {
-    return Integer.toString(this.dollar) + Integer.toString(this.cent);
+    return Integer.toString(this.dollar) + "." + Integer.toString(this.cent);
   }
 }

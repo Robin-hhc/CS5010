@@ -48,6 +48,111 @@ public class SimpleBoxSetTest {
     testAdd.add(1, 1, 3, 15);
     except = new int[][] {{0, 0, 1, 10}, {4, 0, 1, 10}, {1, 0, 3, 1}, {1, 1, 3, 15}};
     assertEquals(except, testAdd.getBoxes());
+
+    // Test only lower width edge non-overlaps
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, -1, 3, 5);
+    except = new int[][] {{0, 0, 1, 10}, {4, 0, 1, 10}, {1, 4, 3, 6}, {1, -1, 3, 5}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test only right height edge non-overlaps
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, 1, 6, 8);
+    except = new int[][] {{0, 0, 5, 1}, {0, 9, 5, 1}, {0, 1, 1, 8}, {1, 1, 6, 8}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test only left height edge non-overlaps
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, 1, 4, 8);
+    except = new int[][] {{0, 0, 5, 1}, {0, 9, 5, 1}, {3, 1, 2, 8}, {-1, 1, 4, 8}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test lower-left corner overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, 1, 5, 10);
+    except = new int[][] {{0, 0, 1, 10}, {1, 0, 4, 1}, {1, 1, 5, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test upper-left corner overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, -1, 5, 10);
+    except = new int[][] {{0, 0, 1, 10}, {1, 9, 4, 1}, {1, -1, 5, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test lower-right corner overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, 1, 5, 10);
+    except = new int[][] {{0, 0, 4, 1}, {4, 0, 1, 10}, {-1, 1, 5, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test upper-right corner overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, -1, 5, 10);
+    except = new int[][] {{0, 9, 4, 1}, {4, 0, 1, 10}, {-1, -1, 5, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test left edge and right edge overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, -1, 3, 12);
+    except = new int[][] {{0, 0, 1, 10}, {4, 0, 1, 10}, {1, -1, 3, 12}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test upper edge and Lower edge overlaps (Two edges overlap)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, 1, 7, 8);
+    except = new int[][] {{0, 0, 5, 1}, {0, 9, 5, 1}, {-1, 1, 7, 8}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test left edge overlaps (One edge overlaps)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(1, -1, 5, 12);
+    except = new int[][] {{0, 0, 1, 10}, {1, -1, 5, 12}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test right edge overlaps (One edge overlaps)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, -1, 5, 12);
+    except = new int[][] {{4, 0, 1, 10}, {-1, -1, 5, 12}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test lower edge overlaps (One edge overlaps)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, 1, 7, 10);
+    except = new int[][] {{0, 0, 5, 1}, {-1, 1, 7, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test upper edge overlaps (One edge overlaps)
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, -1, 7, 10);
+    except = new int[][] {{0, 9, 5, 1}, {-1, -1, 7, 10}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test input rectangle have this rectangle inside
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(-1, -1, 7, 12);
+    except = new int[][] {{-1, -1, 7, 12}};
+    assertEquals(except, testAdd.getBoxes());
+
+    // Test non-overlap
+    testAdd = new SimpleBoxSet();
+    testAdd.add(0, 0, 5, 10);
+    testAdd.add(5, 10, 2, 3);
+    except = new int[][] {{0, 0, 5, 10}, {5, 10, 2, 3}};
+    assertEquals(except, testAdd.getBoxes());
   }
 
   @Test
