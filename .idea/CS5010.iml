@@ -11,6 +11,8 @@
       <sourceFolder url="file://$MODULE_DIR$/P2/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/hw1/box" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/hw1/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/L3/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L3/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/L1/out" />
     </content>
     <orderEntry type="inheritedJdk" />
