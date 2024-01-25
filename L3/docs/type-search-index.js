@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"box","l":"BoxSet"},{"p":"<Unnamed>","l":"SimpleBoxSet"},{"p":"<Unnamed>","l":"SimpleBoxSetTest"},{"l":"所有类和接口","u":"allclasses-index.html"}];updateSearchResults();
+typeSearchIndex = [{"p":"<Unnamed>","l":"Money"},{"p":"<Unnamed>","l":"SimpleMoney"},{"p":"<Unnamed>","l":"SimpleMoneyTest"},{"l":"所有类和接口","u":"allclasses-index.html"}];updateSearchResults();
