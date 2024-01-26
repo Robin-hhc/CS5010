@@ -1,0 +1,16 @@
+4.1 Improving the design
+As my implementation of the two add method, I use method other.getDecimalValue() to get the amount
+of money in format of "xx.yy"". To separate dollars and cent, we can cast it into int to get the
+dollar part, which is the integer part "xx" in "xx.yy". Then, use formula (100*xx.yy)%100 to get the
+cents "yy" in integer type. After that, we construct a new SimpleMoney object with dollar = otherDollars
++ this.dollars and cents = otherCents + this.cent. Finally, we return the new object we just created.
+
+By doing this implementation, our class will work fine without the second add method.
+
+4.2 Better testing
+For testing, my implementation is write a test for each case in the methods. For example, the second
+add method, I test one case in invalid dollars, one case in invalid cents, 1 case with cents will
+exceed 100 and 1 regular case. I believe this kind of implementation test our homework fine if I am
+able to identify all cases there. However, I can easily make mistake while writing tests. Therefore,
+a fuzzy test in each category is necessary. The more tests we do, we have more guarantee that our
+program is going to work.
