@@ -76,7 +76,7 @@ public class BallView extends JFrame {
     }
 
     public static void main(String []args) {
-        PoolSimulator simulator = new SimplePoolSimulator(400,400,"friction");
+        PoolSimulator simulator = new SimplePoolSimulator(400,400,"simple");
         simulator.start(100,100,20,60,1.1,-2);
         JFrame view = new BallView(simulator);
     }

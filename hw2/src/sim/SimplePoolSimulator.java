@@ -237,16 +237,6 @@ public class SimplePoolSimulator implements PoolSimulator{
               (2 * (-(this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) - Math.sqrt(solutionBottom))});
     }
     double smallestPositive = this.smallestPositive(new double[] {tRight, tLeft, tBottom, tTop, tStop});
-    System.out.println(solutionRight);
-    System.out.println(solutionLeft);
-    System.out.println(solutionBottom);
-    System.out.println(solutionTop);
-    System.out.println(tRight);
-    System.out.println(tLeft);
-    System.out.println(tBottom);
-    System.out.println(tTop);
-    System.out.println(tStop);
-    System.out.println(smallestPositive);
     if (tStop == smallestPositive) { // no collision
       this.x += tStop * this.getBallVelocityX();
       this.y += tStop * this.getBallVelocityY();
@@ -280,8 +270,6 @@ public class SimplePoolSimulator implements PoolSimulator{
       this.dy = -this.dy;
       this.speed -= this.GRAVITY*this.FRICTION*tTop;
       this.status = "Ball hit top edge";
-    } else {
-      System.out.println("error");
     }
     this.speed -= this.COLLISION_FRICTION;
     if (this.speed <= 0) {
