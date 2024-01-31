@@ -1,6 +1,5 @@
 package sim;
 
-// TODO ask TA about the Ball View
 /**
  * This class implements a simple pool simulator with only simple type and friction type
  */
@@ -237,6 +236,17 @@ public class SimplePoolSimulator implements PoolSimulator{
               (2 * (-(this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) - Math.sqrt(solutionBottom))});
     }
     double smallestPositive = this.smallestPositive(new double[] {tRight, tLeft, tBottom, tTop, tStop});
+    System.out.println("b^2 - 4ac:");
+    System.out.println(solutionRight);
+    System.out.println(solutionLeft);
+    System.out.println(solutionBottom);
+    System.out.println(solutionTop);
+    System.out.println("times:");
+    System.out.println(tRight);
+    System.out.println(tLeft);
+    System.out.println(tBottom);
+    System.out.println(tTop);
+    System.out.println(tStop);
     if (tStop == smallestPositive) { // no collision
       this.x += tStop * this.getBallVelocityX();
       this.y += tStop * this.getBallVelocityY();
