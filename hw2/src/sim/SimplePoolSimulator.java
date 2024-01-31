@@ -18,7 +18,7 @@ public class SimplePoolSimulator implements PoolSimulator{
   private String status;
   private final int COLLISION_FRICTION = 5;
   private final double FRICTION = 0.1;
-  private final double GRAVITY = 0.1;
+  private final double GRAVITY = 9.81;
 
 
   /**
@@ -67,6 +67,7 @@ public class SimplePoolSimulator implements PoolSimulator{
     this.x = x;
     this.y = y;
     this.radius = radius;
+    this.speed = speed;
     this.dx = dx / Math.sqrt(dx*dx + dy*dy);
     this.dy = dy / Math.sqrt(dx*dx + dy*dy);
     this.status = "Simulation started";
@@ -81,38 +82,38 @@ public class SimplePoolSimulator implements PoolSimulator{
     double tTop;
     double tBottom;
     if (this.dx == 0 && this.dy > 0) { // dx = 0 and collision top edge
-      this.y = (this.height-this.radius-this.y) / this.getBallVelocityY() * this.getBallVelocityY();
+      this.y += (this.height-this.radius-this.y) / this.getBallVelocityY() * this.getBallVelocityY();
       this.dy = -this.dy;
       this.status = "Ball hit top edge";
     } else if (this.dx == 0 && this.dy < 0) { // dx = 0 and collision bottom edge
-      this.y = (this.radius-this.y) / this.getBallVelocityY() * this.getBallVelocityY();
+      this.y += (this.radius-this.y) / this.getBallVelocityY() * this.getBallVelocityY();
       this.dy = -this.dy;
       this.status = "Ball hit bottom edge";
     } else if (this.dx > 0 && this.dy == 0) { // dy = 0 and collision right edge
-      this.x = (this.width-this.radius-this.x) / this.getBallVelocityX() * this.getBallVelocityX();
+      this.x += (this.width-this.radius-this.x) / this.getBallVelocityX() * this.getBallVelocityX();
       this.dx = -this.dx;
       this.status = "Ball hit right edge";
     } else if (this.dx < 0 && this.dy == 0) { // dy = 0 and collision left edge
-      this.x = (this.radius-this.x) / this.getBallVelocityX() * this.getBallVelocityX();
+      this.x += (this.radius-this.x) / this.getBallVelocityX() * this.getBallVelocityX();
       this.dx = -this.dx;
       this.status = "Ball hit left edge";
     } else if (this.dx > 0 && this.dy > 0) { // going top right
       tRight = (this.width-this.radius-this.x) / this.getBallVelocityX();
       tTop = (this.height-this.radius-this.y) / this.getBallVelocityY();
       if (tRight == tTop) { // collision on right top corner TODO ask TA about status in corner cases
-        this.x = tRight * this.getBallVelocityX();
-        this.y = tRight * this.getBallVelocityY();
+        this.x += tRight * this.getBallVelocityX();
+        this.y += tRight * this.getBallVelocityY();
         this.dx = -this.dx;
         this.dy = -this.dy;
         this.status = "Ball hit right edge";
       } else if (tRight < tTop) { // collision on right edge
-        this.x = tRight * this.getBallVelocityX();
-        this.y = tRight * this.getBallVelocityY();
+        this.x += tRight * this.getBallVelocityX();
+        this.y += tRight * this.getBallVelocityY();
         this.dx = -this.dx;
         this.status = "Ball hit right edge";
       } else { // collision on top edge
-        this.x = tTop * this.getBallVelocityX();
-        this.y = tTop * this.getBallVelocityY();
+        this.x += tTop * this.getBallVelocityX();
+        this.y += tTop * this.getBallVelocityY();
         this.dy = -this.dy;
         this.status = "Ball hit top edge";
       }
@@ -120,19 +121,19 @@ public class SimplePoolSimulator implements PoolSimulator{
       tLeft = (this.radius-this.x) / this.getBallVelocityX();
       tTop = (this.height-this.radius-this.y) / this.getBallVelocityY();
       if (tLeft == tTop) { // collision on left top corner
-        this.x = tLeft * this.getBallVelocityX();
-        this.y = tLeft * this.getBallVelocityY();
+        this.x += tLeft * this.getBallVelocityX();
+        this.y += tLeft * this.getBallVelocityY();
         this.dx = -this.dx;
         this.dy = -this.dy;
         this.status = "Ball hit left edge";
       } else if (tLeft < tTop) { // collision on left edge
-        this.x = tLeft * this.getBallVelocityX();
-        this.y = tLeft * this.getBallVelocityY();
+        this.x += tLeft * this.getBallVelocityX();
+        this.y += tLeft * this.getBallVelocityY();
         this.dx = -this.dx;
         this.status = "Ball hit left edge";
       } else { // collision on top edge
-        this.x = tTop * this.getBallVelocityX();
-        this.y = tTop * this.getBallVelocityY();
+        this.x += tTop * this.getBallVelocityX();
+        this.y += tTop * this.getBallVelocityY();
         this.dy = -this.dy;
         this.status = "Ball hit top edge";
       }
@@ -140,19 +141,19 @@ public class SimplePoolSimulator implements PoolSimulator{
       tRight = (this.width-this.radius-this.x) / this.getBallVelocityX();
       tBottom = (this.radius-this.y) / this.getBallVelocityY();
       if (tRight == tBottom) { // collision on right bottom corner
-        this.x = tRight * this.getBallVelocityX();
-        this.y = tRight * this.getBallVelocityY();
+        this.x += tRight * this.getBallVelocityX();
+        this.y += tRight * this.getBallVelocityY();
         this.dx = -this.dx;
         this.dy = -this.dy;
         this.status = "Ball hit right edge";
       } else if (tRight < tBottom) { // collision on right edge
-        this.x = tRight * this.getBallVelocityX();
-        this.y = tRight * this.getBallVelocityY();
+        this.x += tRight * this.getBallVelocityX();
+        this.y += tRight * this.getBallVelocityY();
         this.dx = -this.dx;
         this.status = "Ball hit right edge";
       } else { // collision on bottom edge
-        this.x = tBottom * this.getBallVelocityX();
-        this.y = tBottom * this.getBallVelocityY();
+        this.x += tBottom * this.getBallVelocityX();
+        this.y += tBottom * this.getBallVelocityY();
         this.dy = -this.dy;
         this.status = "Ball hit bottom edge";
       }
@@ -160,19 +161,19 @@ public class SimplePoolSimulator implements PoolSimulator{
       tLeft = (this.radius-this.x) / this.getBallVelocityX();
       tBottom = (this.radius-this.y) / this.getBallVelocityY();
       if (tLeft == tBottom) { // collision on left bottom corner
-        this.x = tLeft * this.getBallVelocityX();
-        this.y = tLeft * this.getBallVelocityY();
+        this.x += tLeft * this.getBallVelocityX();
+        this.y += tLeft * this.getBallVelocityY();
         this.dx = -this.dx;
         this.dy = -this.dy;
         this.status = "Ball hit left edge";
       } else if (tLeft < tBottom) { // collision on left edge
-        this.x = tLeft * this.getBallVelocityX();
-        this.y = tLeft * this.getBallVelocityY();
+        this.x += tLeft * this.getBallVelocityX();
+        this.y += tLeft * this.getBallVelocityY();
         this.dx = -this.dx;
         this.status = "Ball hit left edge";
       } else { // collision on bottom edge
-        this.x = tBottom * this.getBallVelocityX();
-        this.y = tBottom * this.getBallVelocityY();
+        this.x += tBottom * this.getBallVelocityX();
+        this.y += tBottom * this.getBallVelocityY();
         this.dy = -this.dy;
         this.status = "Ball hit bottom edge";
       }
@@ -190,167 +191,97 @@ public class SimplePoolSimulator implements PoolSimulator{
    * Helper method for advance. Advance one collision in friction type
    */
   private void advanceFriction() {
-    double solutionRight = (this.speed*this.dx*this.speed*this.dx) - (4*this.GRAVITY*this.FRICTION*this.dx/2 * (this.width-this.radius-this.x)); // Two negative turn to positive
-    double solutionLeft = (this.speed*this.dx*this.speed*this.dx) - (4*this.GRAVITY*this.FRICTION*this.dx/2 * (this.radius-this.x));
-    double solutionTop = (this.speed*this.dy*this.speed*this.dy) - (4*this.GRAVITY*this.FRICTION*this.dy/2 * (this.height-this.radius-this.y));
-    double solutionBottom = (this.speed*this.dy*this.speed*this.dy) - (4*this.GRAVITY*this.FRICTION*this.dy/2 * (this.radius-this.y));
-    double t;
-    double t1;
-    double t2;
-    if (solutionRight < 0 && solutionBottom < 0 && solutionLeft < 0 && solutionTop < 0) { // no collision
-      t = - (this.speed/this.GRAVITY*this.FRICTION*this.dx); // TODO ask TA to use dx, dy as a
-      this.x = t * this.getBallVelocityX();
-      this.y = t * this.getBallVelocityY();
+    double solutionRight;
+    double solutionLeft;
+    double solutionTop;
+    double solutionBottom;
+    if ((this.width-this.radius-this.x) != 0) {
+      solutionRight = (this.getBallVelocityX()*this.getBallVelocityX()) -
+              (4 * (-(this.GRAVITY*this.FRICTION*this.dx/2)) * (-(this.width-this.radius-this.x)));
+    } else { solutionRight = -1;}
+    if ((this.radius-this.x) != 0){
+      solutionLeft = (this.getBallVelocityX()*this.getBallVelocityX()) -
+              (4 * (-(this.GRAVITY*this.FRICTION*this.dx/2)) * (-(this.radius-this.x)));
+    } else { solutionLeft = -1;}
+    if ((this.height-this.radius-this.y) != 0) {
+      solutionTop = (this.getBallVelocityY()*this.getBallVelocityY()) -
+              (4 * (-(this.GRAVITY*this.FRICTION*this.dy/2)) * (-(this.height-this.radius-this.y)));
+    } else { solutionTop = -1;}
+    if ((this.radius-this.y) != 0) {
+      solutionBottom = (this.getBallVelocityY()*this.getBallVelocityY()) -
+              (4 * (-(this.GRAVITY*this.FRICTION*this.dy/2)) * (-(this.radius-this.y)));
+    } else { solutionBottom = -1;}
+    double tRight = -1;
+    double tLeft = -1;
+    double tTop = -1;
+    double tBottom = -1;
+    double tStop = this.speed/(this.GRAVITY*this.FRICTION); // TODO ask TA if this is right
+    if (solutionRight > 0) {
+      tRight = this.smallestPositive(new double[] {
+              (2 * (-(this.width-this.radius-this.x))) / (-(this.GRAVITY * this.FRICTION * this.dx / 2) + Math.sqrt(solutionRight)),
+              (2 * (-(this.width-this.radius-this.x))) / (-(this.GRAVITY * this.FRICTION * this.dx / 2) - Math.sqrt(solutionRight))});
+    }
+    if (solutionLeft > 0) {
+      tLeft = this.smallestPositive(new double[] {
+              (2 * (-(this.radius-this.x))) / (-(this.GRAVITY * this.FRICTION * this.dx / 2) + Math.sqrt(solutionLeft)),
+              (2 * (-(this.radius-this.x))) / (-(this.GRAVITY * this.FRICTION * this.dx / 2) - Math.sqrt(solutionLeft))});
+    }
+    if (solutionTop > 0) {
+      tLeft = this.smallestPositive(new double[] {
+              (2 * (-(this.height-this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) + Math.sqrt(solutionTop)),
+              (2 * (-(this.height-this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) - Math.sqrt(solutionTop))});
+    }
+    if (solutionBottom > 0) {
+      tLeft = this.smallestPositive(new double[] {
+              (2 * (-(this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) + Math.sqrt(solutionBottom)),
+              (2 * (-(this.radius-this.y))) / (-(this.GRAVITY * this.FRICTION * this.dy / 2) - Math.sqrt(solutionBottom))});
+    }
+    double smallestPositive = this.smallestPositive(new double[] {tRight, tLeft, tBottom, tTop, tStop});
+    System.out.println(solutionRight);
+    System.out.println(solutionLeft);
+    System.out.println(solutionBottom);
+    System.out.println(solutionTop);
+    System.out.println(tRight);
+    System.out.println(tLeft);
+    System.out.println(tBottom);
+    System.out.println(tTop);
+    System.out.println(tStop);
+    System.out.println(smallestPositive);
+    if (tStop == smallestPositive) { // no collision
+      this.x += tStop * this.getBallVelocityX();
+      this.y += tStop * this.getBallVelocityY();
       this.dx = 0;
       this.dy = 0;
       this.speed = 0;
       this.status = "Ball is stationary";
       return;
     }
-    if (solutionBottom < 0 && solutionLeft < 0 && solutionTop < 0) { // can only collision in right edge
-      t = this.smallestPositive(new double[] {
-              (2 * (this.width-this.radius-this.x)) / ((this.speed*this.dx) + solutionRight),
-              (2 * (this.width-this.radius-this.x)) / ((this.speed*this.dx) - solutionRight)});
-      this.x = t * this.getBallVelocityX();
-      this.y = t * this.getBallVelocityY();
+    if (tRight == smallestPositive) { // collision in right edge
+      this.x += tRight * this.getBallVelocityX();
+      this.y += tRight * this.getBallVelocityY();
       this.dx = -this.dx;
-      this.speed -= this.GRAVITY*this.FRICTION*t; // TODO ask TA if it is the right formula
+      this.speed -= this.GRAVITY*this.FRICTION*tRight; // TODO ask TA if it is the right formula
       this.status = "Ball hit right edge";
-    } else if (solutionRight < 0 && solutionLeft < 0 && solutionTop < 0) { // can only collision in bottom edge
-      t = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) + solutionBottom),
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) - solutionBottom)});
-      this.x = t * this.getBallVelocityX();
-      this.y = t * this.getBallVelocityY();
+    } else if (tBottom == smallestPositive) { // collision in bottom edge
+      this.x += tBottom * this.getBallVelocityX();
+      this.y += tBottom * this.getBallVelocityY();
       this.dy = -this.dy;
-      this.speed -= this.GRAVITY*this.FRICTION*t;
+      this.speed -= this.GRAVITY*this.FRICTION*tBottom;
       this.status = "Ball hit bottom edge";
-    } else if (solutionRight < 0 && solutionBottom < 0 && solutionTop < 0) { // can only collision in left edge
-      t = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) + solutionLeft),
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) - solutionLeft)});
-      this.x = t * this.getBallVelocityX();
-      this.y = t * this.getBallVelocityY();
+    } else if (tLeft == smallestPositive) { // collision in left edge
+      this.x += tLeft * this.getBallVelocityX();
+      this.y += tLeft * this.getBallVelocityY();
       this.dx = -this.dx;
-      this.speed -= this.GRAVITY*this.FRICTION*t;
+      this.speed -= this.GRAVITY*this.FRICTION*tLeft;
       this.status = "Ball hit left edge";
-    } else if (solutionRight < 0 && solutionBottom < 0 && solutionLeft < 0) { // can only collision in top edge
-      t = this.smallestPositive(new double[] {
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) + solutionTop),
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) - solutionTop)});
-      this.x = t * this.getBallVelocityX();
-      this.y = t * this.getBallVelocityY();
+    } else if (tTop == smallestPositive) { // collision in top edge
+      this.x += tTop * this.getBallVelocityX();
+      this.y += tTop * this.getBallVelocityY();
       this.dy = -this.dy;
-      this.speed -= this.GRAVITY*this.FRICTION*t;
+      this.speed -= this.GRAVITY*this.FRICTION*tTop;
       this.status = "Ball hit top edge";
-    } else if (solutionBottom < 0 && solutionLeft < 0) { // can collision in top and right edge
-      t1 = this.smallestPositive(new double[] {
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) + solutionTop),
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) - solutionTop)});
-      t2 = this.smallestPositive(new double[] {
-              (2 * (this.width-this.radius-this.x)) / ((this.speed*this.dx) + solutionRight),
-              (2 * (this.width-this.radius-this.x)) / ((this.speed*this.dx) - solutionRight)});
-      if (t1 == t2) { // collision in top right corner
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit top edge";
-      } else if (t1 < t2) { // collision in top edge
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit top edge";
-      } else if (t1 > t2) { // collision in right edge
-        this.x = t2 * this.getBallVelocityX();
-        this.y = t2 * this.getBallVelocityY();
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t2;
-        this.status = "Ball hit right edge";
-      }
-    } else if (solutionBottom < 0 && solutionRight < 0) { // can collision in top and left edge
-      t1 = this.smallestPositive(new double[] {
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) + solutionTop),
-              (2 * (this.height-this.radius-this.y)) / ((this.speed*this.dy) - solutionTop)});
-      t2 = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) + solutionLeft),
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) - solutionLeft)});
-      if (t1 == t2) { // collision in top left corner
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit top edge";
-      } else if (t1 < t2) { // collision in top edge
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit top edge";
-      } else if (t1 > t2) { // collision in left edge
-        this.x = t2 * this.getBallVelocityX();
-        this.y = t2 * this.getBallVelocityY();
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t2;
-        this.status = "Ball hit left edge";
-      }
-    } else if (solutionTop < 0 && solutionRight < 0) { // can collision in bottom and left edge
-      t1 = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) + solutionBottom),
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) - solutionBottom)});
-      t2 = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) + solutionLeft),
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) - solutionLeft)});
-      if (t1 == t2) { // collision in bottom left corner
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit bottom edge";
-      } else if (t1 < t2) { // collision in bottom edge
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit bottom edge";
-      } else if (t1 > t2) { // collision in left edge
-        this.x = t2 * this.getBallVelocityX();
-        this.y = t2 * this.getBallVelocityY();
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t2;
-        this.status = "Ball hit left edge";
-      }
-    } else if (solutionTop < 0 && solutionLeft < 0) { // can collision in bottom and right edge
-      t1 = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) + solutionBottom),
-              (2 * (this.radius-this.y)) / ((this.speed*this.dy) - solutionBottom)});
-      t2 = this.smallestPositive(new double[] {
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) + solutionRight),
-              (2 * (this.radius-this.x)) / ((this.speed*this.dx) - solutionRight)});
-      if (t1 == t2) { // collision in bottom right corner
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit bottom edge";
-      } else if (t1 < t2) { // collision in bottom edge
-        this.x = t1 * this.getBallVelocityX();
-        this.y = t1 * this.getBallVelocityY();
-        this.dy = -this.dy;
-        this.speed -= this.GRAVITY*this.FRICTION*t1;
-        this.status = "Ball hit bottom edge";
-      } else if (t1 > t2) { // collision in right edge
-        this.x = t2 * this.getBallVelocityX();
-        this.y = t2 * this.getBallVelocityY();
-        this.dx = -this.dx;
-        this.speed -= this.GRAVITY*this.FRICTION*t2;
-        this.status = "Ball hit right edge";
-      }
+    } else {
+      System.out.println("error");
     }
     this.speed -= this.COLLISION_FRICTION;
     if (this.speed <= 0) {
@@ -401,10 +332,10 @@ public class SimplePoolSimulator implements PoolSimulator{
   public double getBallRadius() { return this.radius;}
 
   @Override
-  public double getBallVelocityX() { return this.speed * dx;}
+  public double getBallVelocityX() { return this.speed * this.dx;}
 
   @Override
-  public double getBallVelocityY() { return this.speed * dy;}
+  public double getBallVelocityY() { return this.speed * this.dy;}
 
   /**
    * Find the status of the simulation at the current step.
