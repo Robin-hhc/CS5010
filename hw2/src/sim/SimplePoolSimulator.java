@@ -99,7 +99,7 @@ public class SimplePoolSimulator implements PoolSimulator{
     } else if (this.dx > 0 && this.dy > 0) { // going top right
       tRight = (this.width-this.radius-this.x) / this.getBallVelocityX();
       tTop = (this.height-this.radius-this.y) / this.getBallVelocityY();
-      if (tRight == tTop) { // collision on right top corner TODO ask TA about status in corner cases
+      if (tRight == tTop) { // collision on right top corner
         this.x += tRight * this.getBallVelocityX();
         this.y += tRight * this.getBallVelocityY();
         this.dx = -this.dx;
@@ -246,7 +246,7 @@ public class SimplePoolSimulator implements PoolSimulator{
     double smallestPositive = this.smallestPositive(new double[] {tRight, tLeft, tBottom, tTop, tStop});
     if (tStop == smallestPositive) { // no collision
       this.x += tStop * this.getBallVelocityX() - tStop*tStop*this.GRAVITY*this.FRICTION*this.dx/2;
-      this.y += tStop * this.getBallVelocityY() - tStop*tStop*this.GRAVITY*this.FRICTION*this.dx/2;
+      this.y += tStop * this.getBallVelocityY() - tStop*tStop*this.GRAVITY*this.FRICTION*this.dy/2;
       this.dx = 0;
       this.dy = 0;
       this.speed = 0;
