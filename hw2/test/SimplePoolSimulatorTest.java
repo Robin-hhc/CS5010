@@ -159,7 +159,7 @@ public class SimplePoolSimulatorTest {
   public void getBallPositionXTestFriction() {
     test = new SimplePoolSimulator(400,400,"friction");
     assertEquals(Double.NEGATIVE_INFINITY, test.getBallPositionX(), 0);
-    test.start(200,20,20,25,1.5,1.5);
+    test.start(200,20,20,60,1.5,1.5);
     assertEquals(200, test.getBallPositionX(), 0);
     test.advance();
     assertEquals(380, test.getBallPositionX(), 0.001);
@@ -170,14 +170,68 @@ public class SimplePoolSimulatorTest {
     test.advance();
     assertEquals(200, test.getBallPositionX(), 0.001);
     test.advance();
-    assertEquals(380, test.getBallPositionX(), 0.001);
+    assertEquals(261.9172, test.getBallPositionX(), 0.001);
+  }
+
+  @Test
+  public void getBallPositionYTestFriction() {
+    test = new SimplePoolSimulator(400,400,"friction");
+    assertEquals(Double.NEGATIVE_INFINITY, test.getBallPositionX(), 0);
+    test.start(200,20,20,60,1.5,1.5);
+    assertEquals(20, test.getBallPositionY(), 0);
+    test.advance();
+    assertEquals(200, test.getBallPositionY(), 0.001);
+    test.advance();
+    assertEquals(380, test.getBallPositionY(), 0.001);
+    test.advance();
+    assertEquals(200, test.getBallPositionY(), 0.001);
+    test.advance();
+    assertEquals(20, test.getBallPositionY(), 0.001);
+    test.advance();
+    assertEquals(81.9172, test.getBallPositionY(), 0.001);
+  }
+
+  @Test
+  public void getBallVelocityXTestFriction() {
+    test = new SimplePoolSimulator(400, 400, "friction");
+    assertEquals(0, test.getBallVelocityX(), 0);
+    test.start(200, 20, 20, 60, 1.5, 1.5);
+    assertEquals(42.4264, test.getBallVelocityX(), 0.001);
+    test.advance();
+    assertEquals(-35.8380, test.getBallVelocityX(), 0.001);
+    test.advance();
+    assertEquals(-28.6303, test.getBallVelocityX(), 0.001);
+    test.advance();
+    assertEquals(20.3386, test.getBallVelocityX(), 0.001);
+    test.advance();
+    assertEquals(9.2682, test.getBallVelocityX(), 0.001);
+    test.advance();
+    assertEquals(0, test.getBallVelocityX(), 0.001);
+  }
+
+  @Test
+  public void getBallVelocityYTestFriction() {
+    test = new SimplePoolSimulator(400, 400, "friction");
+    assertEquals(0, test.getBallVelocityY(), 0);
+    test.start(200, 20, 20, 60, 1.5, 1.5);
+    assertEquals(42.4264, test.getBallVelocityY(), 0.001);
+    test.advance();
+    assertEquals(35.8380, test.getBallVelocityY(), 0.001);
+    test.advance();
+    assertEquals(-28.6303, test.getBallVelocityY(), 0.001);
+    test.advance();
+    assertEquals(-20.3386, test.getBallVelocityY(), 0.001);
+    test.advance();
+    assertEquals(9.2682, test.getBallVelocityY(), 0.001);
+    test.advance();
+    assertEquals(0, test.getBallVelocityY(), 0.001);
   }
 
   @Test
   public void getStatusTestFriction() {
     test = new SimplePoolSimulator(400,400,"friction");
     assertEquals("Status: Ball not set up", test.getStatus());
-    test.start(200,20,20,23,1.5,1.5);
+    test.start(200,20,20,60,1.5,1.5);
     assertEquals("Status: Simulation started", test.getStatus());
     test.advance();
     assertEquals("Status: Ball hit right edge", test.getStatus());
