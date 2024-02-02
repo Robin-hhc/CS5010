@@ -3,6 +3,10 @@ package movies;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * This class implements MovieList and provides a list of movies. Movies can be added and removed.
+ * We can also get a subset of these movies.
+ */
 public class MovieLinkedList implements MovieList{
   ArrayList<Movie> movies;
   MovieLinkedList next;
