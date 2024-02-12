@@ -1,4 +1,11 @@
+import java.util.ArrayList;
+
 public class PointKDTree implements SetOfPoints{
+
+  public PointKDTree (Point2D[] points) throws IllegalArgumentException {
+    if (points == null) { throw new IllegalArgumentException("Points list invalid.");}
+
+  }
 
   @Override
   public boolean add(Point2D point) {
