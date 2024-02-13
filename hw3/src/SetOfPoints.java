@@ -8,7 +8,7 @@ public interface SetOfPoints {
    * @param point a Point object to add
    * @return true if we add the point successfully, false if the point is already exists in the set.
    */
-  boolean add (Point2D point);
+  void add (Point2D point);
 
   /**
    * returns a List of all the points currently in this set.

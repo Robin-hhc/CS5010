@@ -104,8 +104,40 @@ public class PointKDTree implements SetOfPoints{
   }
 
   @Override
-  public boolean add(Point2D point) {
-    return false;
+  public void add(Point2D point) {
+    Node curr = this.root;
+    int depth = 0;
+    while (curr != null) {
+      if (curr.value.equals(point)) {
+        curr.count++;
+        return;
+      }
+      int a, b, c;
+      if (depth%2 == 0) { // Compare y
+        a=1;
+        b=0;
+        c=-curr.value.x;
+      } else { // compare y
+        a=0;
+        b=1;
+        c=-curr.value.y;
+      }
+      double sd = signedDistance(point,a,b,c);
+      if (sd <= 0) {
+        if (curr.left == null) {
+          curr.left = new Node(point, 1);
+          return;
+        }
+        curr = curr.left;
+      } else {
+        if (curr.right == null) {
+          curr.right = new Node(point, 1);
+          return;
+        }
+        curr = curr.right;
+      }
+      depth++;
+    }
   }
 
   @Override

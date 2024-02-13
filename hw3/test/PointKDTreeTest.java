@@ -24,4 +24,14 @@ public class PointKDTreeTest {
     Arrays.sort(resSorted, (a, b) -> Integer.compare(a.x, b.x));
     Assert.assertArrayEquals(this.points, resSorted);
   }
+
+  @Test
+  public void addTest() {
+    PointKDTree res = new PointKDTree(this.points);
+    res.add(new Point2D(0, 1));
+    Point2D[] expect = new Point2D[]{new Point2D(0, 1), new Point2D(0, 0), new Point2D(1, 1), new Point2D(1, 1), new Point2D(2, 2)};
+    Point2D[] resSorted = res.getPoints();
+    Arrays.sort(resSorted, (a, b) -> Integer.compare(a.x, b.x));
+    Assert.assertArrayEquals(expect, resSorted);
+  }
 }
