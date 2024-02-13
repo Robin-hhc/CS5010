@@ -24,6 +24,7 @@
       <sourceFolder url="file://$MODULE_DIR$/hw3/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/P5/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/P5/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/hw3/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/L1/out" />
     </content>
     <orderEntry type="inheritedJdk" />
