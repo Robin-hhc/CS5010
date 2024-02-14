@@ -2,6 +2,9 @@
  * This interface represents a set of 2D points, that can be searched
  */
 package kdtree;
+
+import java.util.List;
+
 public interface SetOfPoints {
   /**
    * Add a point to the set.
@@ -13,7 +16,7 @@ public interface SetOfPoints {
    * returns a List of all the points currently in this set.
    * @return list of all the points currently in this set.
    */
-  Point2D[] getPoints();
+  List<Point2D> getPoints();
 
   /**
    * Find all the points in this set that lie inside or on the given circle field.
@@ -21,7 +24,7 @@ public interface SetOfPoints {
    * @param radius the radius of the circle.
    * @return list of points in this set that lie inside or on this circle.
    */
-  Point2D[] allPointsWithinCircle(Point2D center, double radius);
+  List<Point2D> allPointsWithinCircle(Point2D center, double radius);
 
   /**
    * Find the point in this set that is closest to this query point. If no such point exists,

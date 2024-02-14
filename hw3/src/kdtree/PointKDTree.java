@@ -128,17 +128,17 @@ public class PointKDTree implements SetOfPoints{
   }
 
   @Override
-  public Point2D[] getPoints() {
-    return this.root.getPoints().toArray(new Point2D[0]);
+  public List<Point2D> getPoints() {
+    return this.root.getPoints();
   }
 
   @Override
-  public Point2D[] allPointsWithinCircle(Point2D center, double radius) {
-    return this.root.allPointsWithinCircle(center, radius).toArray(new Point2D[0]);
+  public List<Point2D> allPointsWithinCircle(Point2D center, double radius) {
+    return this.root.allPointsWithinCircle(center, radius);
   }
 
   @Override
   public Point2D closestPoint(Point2D point) {
-    return null;
+    return this.root.closestPoint(point);
   }
 }

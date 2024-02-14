@@ -1,5 +1,6 @@
 package kdtree;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that store all information of a node on the KDTree.
@@ -68,7 +69,84 @@ public class Node {
     return res;
   }
 
-  public ArrayList<Point2D> allPointsWithinCircle(Point2D center, double radius) {
-    return new ArrayList<>();
+  /**
+   * Helper method for the constructor, calculated the signed distance of point p from line ax+by+c=0
+   * @param p the input point.
+   * @param a the input constant.
+   * @param b the input constant.
+   * @param c the input constant.
+   * @return result of signed distance with formula ax+by+c=0.
+   */
+  private double signedDistance(Point2D p, int a, int b, int c) { //find the signed distance of point T from line ax+by+c=0
+    return a*p.x + b*p.y + c;
+  }
+
+  /**
+   * Find all the points rooted in this node that lie inside or on the given circle field recursively.
+   * @param center the center if the circle.
+   * @param radius the radius of the circle.
+   * @return list of points in this set that lie inside or on this circle.
+   */
+  public List<Point2D> allPointsWithinCircle(Point2D center, double radius) {
+    ArrayList<Point2D> ans = new ArrayList<>();
+    if (this.left == null && this.right == null) {
+      if (this.value.distance(center) <= radius) {
+        ans.add(this.value);
+      }
+      return ans;
+    }
+
+    double sd = signedDistance(center, this.a, this.b, this.c);
+    if (sd <= 0) {
+      if (this.left != null) {
+        ans.addAll(this.left.allPointsWithinCircle(center, radius));
+      }
+      if (-sd < radius && this.right != null) {
+        ans.addAll(this.right.allPointsWithinCircle(center, radius));
+      }
+    } else {
+      if (this.right != null) {
+        ans.addAll(this.right.allPointsWithinCircle(center, radius));
+      }
+      if (sd < radius && this.left != null) {
+        ans.addAll(this.left.allPointsWithinCircle(center, radius));
+      }
+    }
+    for (Point2D p: this.on) {
+      if (p.distance(center) <= radius) {
+        ans.add(p);
+      }
+    }
+    return ans;
+  }
+
+  /**
+   * Find the point in this set that is closest to this query point. If no such point exists,
+   * this method return null
+   * @param point the input point.
+   * @return point in this set that is closest to the given point.
+   */
+  public Point2D closestPoint(Point2D point) {
+    Point2D resOn, resLeft = null, resRight = null;
+    if (this.left != null) {
+      resLeft = this.left.closestPoint(point);
+    }
+    if (this.right != null) {
+      resRight = this.right.closestPoint(point);
+    }
+
+    resOn = this.value;
+    for (Point2D p: this.on) {
+      if (p.distance(point) < resOn.distance(point)) {
+        resOn = p;
+      }
+    }
+    if (resLeft != null && resLeft.distance(point) < resOn.distance(point)) {
+      resOn = resLeft;
+    }
+    if (resRight != null && resRight.distance(point) < resOn.distance(point)) {
+      resOn = resRight;
+    }
+    return resOn;
   }
 }
