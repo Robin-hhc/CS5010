@@ -1,5 +1,7 @@
+package kdtree;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A PointKDTree class that extends SetOfPoints class. Implemented a structure to store the set of
@@ -14,7 +16,7 @@ public class PointKDTree implements SetOfPoints{
    * @param points the input points that the PointKDTree initially have.
    */
   public PointKDTree (Point2D[] points) throws IllegalArgumentException {
-    if (points == null) { throw new IllegalArgumentException("Points list invalid.");}
+    if (points == null) { throw new IllegalArgumentException("Points list invalid");}
     Point2D[] px, py;
     Arrays.sort(points, (a, b) -> Integer.compare(a.x, b.x));
     px = points.clone();
@@ -32,28 +34,29 @@ public class PointKDTree implements SetOfPoints{
    */
   private Node buildKdTree(Point2D[] px, Point2D[] py, int depth) {
     if (px.length == 0) {
-      return new Node(null, 0);
+      return null;
     } else if (px.length == 1) {
-      return new Node(px[0], 1);
+      return new Node(px[0], new ArrayList<Point2D>(List.of(px)), 1, 0, -px[0].x);
     }
 
     int a, b, c;
-    Node res;
+    Point2D p;
     if (depth %2 == 0) { //use vertical line
       //line is x+by+c
-      a=1;
-      b=0;
-      c=-px[px.length/2].x;
-      res = new Node(px[px.length/2], 0);
+      a = 1;
+      b = 0;
+      c = -px[px.length/2].x;
+      p = px[px.length/2];
     }
     else {
       //line is ax+by+c
-      a=0;
-      b=1;
-      c=-py[py.length/2].y;
-      res = new Node(py[py.length/2], 0);
+      a = 0;
+      b = 1;
+      c = -py[py.length/2].y;
+      p = py[py.length/2];
     }
 
+    ArrayList<Point2D> on = new ArrayList<Point2D>();
     ArrayList<Point2D> pxBefore = new ArrayList<Point2D>();
     ArrayList<Point2D> pxAfter = new ArrayList<Point2D>();
     ArrayList<Point2D> pyBefore = new ArrayList<Point2D>();
@@ -67,11 +70,7 @@ public class PointKDTree implements SetOfPoints{
         pxAfter.add(px[i]);
       }
       else {
-        if (px[i].equals(res.value)) {
-          res.count++;
-        } else {
-          pxBefore.add(px[i]);
-        }
+        on.add(px[i]);
       }
     }
     for (int i = 0; i<py.length; i++) {
@@ -82,13 +81,10 @@ public class PointKDTree implements SetOfPoints{
       else if (sd>0) {
         pyAfter.add(py[i]);
       }
-      else if (!py[i].equals(res.value)){
-        pyAfter.add(px[i]);
-      }
     }
-    res.left = this.buildKdTree(pxBefore.toArray(new Point2D[0]), pyBefore.toArray(new Point2D[0]), depth+1);
-    res.right = this.buildKdTree(pxAfter.toArray(new Point2D[0]), pyAfter.toArray(new Point2D[0]), depth+1);
-    return res;
+    Node left = this.buildKdTree(pxBefore.toArray(new Point2D[0]), pyBefore.toArray(new Point2D[0]), depth+1);
+    Node right = this.buildKdTree(pxAfter.toArray(new Point2D[0]), pyAfter.toArray(new Point2D[0]), depth+1);
+    return new Node(p, left, right, on, a, b, c);
   }
 
   /**
@@ -106,37 +102,28 @@ public class PointKDTree implements SetOfPoints{
   @Override
   public void add(Point2D point) {
     Node curr = this.root;
-    int depth = 0;
     while (curr != null) {
-      if (curr.value.equals(point)) {
-        curr.count++;
-        return;
-      }
-      int a, b, c;
-      if (depth%2 == 0) { // Compare y
-        a=1;
-        b=0;
-        c=-curr.value.x;
-      } else { // compare y
-        a=0;
-        b=1;
-        c=-curr.value.y;
-      }
-      double sd = signedDistance(point,a,b,c);
-      if (sd <= 0) {
+      double sd = signedDistance(point, curr.a, curr.b, curr.c);
+      if (sd < 0) {
         if (curr.left == null) {
-          curr.left = new Node(point, 1);
+          ArrayList<Point2D> on = new ArrayList<Point2D>();
+          on.add(point);
+          curr.left = new Node(point, on, curr.b, curr.a, -curr.b*point.x-curr.a*point.y);
           return;
         }
         curr = curr.left;
-      } else {
+      } else if (sd > 0){
         if (curr.right == null) {
-          curr.right = new Node(point, 1);
+          ArrayList<Point2D> on = new ArrayList<Point2D>();
+          on.add(point);
+          curr.right = new Node(point, on, curr.b, curr.a, -curr.b*point.x-curr.a*point.y);
           return;
         }
         curr = curr.right;
+      } else {
+        curr.on.add(point);
+        return;
       }
-      depth++;
     }
   }
 
@@ -147,7 +134,7 @@ public class PointKDTree implements SetOfPoints{
 
   @Override
   public Point2D[] allPointsWithinCircle(Point2D center, double radius) {
-    return new Point2D[0];
+    return this.root.allPointsWithinCircle(center, radius).toArray(new Point2D[0]);
   }
 
   @Override

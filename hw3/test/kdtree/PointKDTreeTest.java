@@ -1,3 +1,4 @@
+package kdtree;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -14,6 +15,17 @@ public class PointKDTreeTest {
   @Before
   public void setUp() {
     this.points = new Point2D[]{new Point2D(0, 0), new Point2D(1, 1), new Point2D(2, 2), new Point2D(1, 1)};
+  }
+
+  @Test
+  public void constructorTestError() {
+    String errorMessage1 = "";
+    try {
+      new PointKDTree(null);
+    } catch (Exception e) {
+      errorMessage1 = e.getMessage();
+    }
+    assertEquals("Points list invalid", errorMessage1);
   }
 
   @Test

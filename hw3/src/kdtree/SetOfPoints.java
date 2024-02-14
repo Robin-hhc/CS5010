@@ -1,12 +1,11 @@
 /**
  * This interface represents a set of 2D points, that can be searched
  */
+package kdtree;
 public interface SetOfPoints {
   /**
-   * Add a point to the set. Return false if the point is already exists in the set.
-   * Otherwise, return Ture.
+   * Add a point to the set.
    * @param point a Point object to add
-   * @return true if we add the point successfully, false if the point is already exists in the set.
    */
   void add (Point2D point);
 
