@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"<Unnamed>","l":"BloodPressureRecord"},{"p":"<Unnamed>","l":"Monitor"},{"p":"<Unnamed>","l":"PatientMonitor"},{"p":"<Unnamed>","l":"PatientMonitorTest"},{"p":"<Unnamed>","l":"SingleBloodPressureRecord"},{"p":"<Unnamed>","l":"SingleBloodPressureRecordTest"},{"l":"所有类和接口","u":"allclasses-index.html"}];updateSearchResults();

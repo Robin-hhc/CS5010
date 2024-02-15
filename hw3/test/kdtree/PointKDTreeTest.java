@@ -10,7 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * A JUnit test class for the PointKDTree class. getPoints() test is included in all tests.
+ * A JUnit test class for the PointKDTree class.
+ * getPoints() test is included in all tests.
  */
 public class PointKDTreeTest {
   Point2D[] points;
