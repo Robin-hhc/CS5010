@@ -55,15 +55,11 @@ public class Node {
    */
   public ArrayList<Point2D> getPoints() {
     ArrayList<Point2D> res = new ArrayList<Point2D>();
-    if (this.left == null && this.right == null) {
-    } else if (this.left == null) {
-      res.addAll(this.right.getPoints());
-    } else if (this.right == null) {
-      res.add(this.value);
+    if (this.left != null) {
       res.addAll(this.left.getPoints());
-    } else {
+    }
+    if (this.right != null) {
       res.addAll(this.right.getPoints());
-      res.addAll(this.left.getPoints());
     }
     res.addAll(this.on);
     return res;

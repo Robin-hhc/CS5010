@@ -58,14 +58,10 @@ public class PointKDTreeTest {
     expect = new Point2D[]{new Point2D(-1, -1), new Point2D(0, 0), new Point2D(0, 10), new Point2D(10, 10), new Point2D(10, 10), new Point2D(20, 20), new Point2D(30, 30)};
     resSorted = res.getPoints().toArray(new Point2D[0]);
     Arrays.sort(resSorted, (a, b) -> Integer.compare(a.x, b.x));
-    for (Point2D p: resSorted) {
-      System.out.print(p.x);
-      System.out.println(p.y);
-    }
     Assert.assertArrayEquals(expect, resSorted);
 
     res.add(new Point2D(0, 0));
-    expect = new Point2D[]{new Point2D(-1, -1), new Point2D(0, 0), new Point2D(0, 0), new Point2D(0, 10), new Point2D(10, 10), new Point2D(10, 10), new Point2D(20, 20), new Point2D(30, 30)};
+    expect = new Point2D[]{new Point2D(-1, -1), new Point2D(0, 0), new Point2D(0, 10), new Point2D(0, 0), new Point2D(10, 10), new Point2D(10, 10), new Point2D(20, 20), new Point2D(30, 30)};
     resSorted = res.getPoints().toArray(new Point2D[0]);
     Arrays.sort(resSorted, (a, b) -> Integer.compare(a.x, b.x));
     Assert.assertArrayEquals(expect, resSorted);
