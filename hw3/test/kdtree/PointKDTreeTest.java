@@ -15,7 +15,7 @@ public class PointKDTreeTest {
   Point2D[] points;
   @Before
   public void setUp() {
-    this.points = new Point2D[]{new Point2D(0, 0), new Point2D(1, 1), new Point2D(2, 2), new Point2D(1, 1)};
+    this.points = new Point2D[]{new Point2D(0, 0), new Point2D(10, 10), new Point2D(20, 20), new Point2D(10, 10)};
   }
 
   @Test
@@ -40,11 +40,22 @@ public class PointKDTreeTest {
 
   @Test
   public void addTest() {
-    PointKDTree res = new PointKDTree(this.points);
-    res.add(new Point2D(0, 1));
-    Point2D[] expect = new Point2D[]{new Point2D(0, 1), new Point2D(0, 0), new Point2D(1, 1), new Point2D(1, 1), new Point2D(2, 2)};
+    PointKDTree res = new PointKDTree(points);
+    res.add(new Point2D(0, 10));
+    Point2D[] expect = new Point2D[]{new Point2D(0, 0), new Point2D(0, 10), new Point2D(10, 10), new Point2D(10, 10), new Point2D(20, 20)};
     Point2D[] resSorted = res.getPoints().toArray(new Point2D[0]);
     Arrays.sort(resSorted, (a, b) -> Integer.compare(a.x, b.x));
     Assert.assertArrayEquals(expect, resSorted);
+  }
+
+  @Test
+  public void allPointsWithinCircleTest() {
+    PointKDTree res = new PointKDTree(points);
+//    for (Point2D p: res.allPointsWithinCircle(new Point2D(-1, 10), 11)) {
+//      System.out.print(p.x);
+//      System.out.println(p.y);
+//    }
+    Point2D[] expect = new Point2D[]{new Point2D(0, 0), new Point2D(10, 10), new Point2D(10, 10)};
+    Assert.assertArrayEquals(expect, res.allPointsWithinCircle(new Point2D(-1, 10), 11).toArray(new Point2D[0]));
   }
 }
