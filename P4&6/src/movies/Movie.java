@@ -65,4 +65,20 @@ public class Movie implements Comparable<Movie> {
     }
     return -1;
   }
+
+  /**
+   * Overrides the equals method. Compare string ignore the case difference.
+   * @param obj the input object need to be compared.
+   * @return true if the name are the same. False otherwise.
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (! (obj instanceof Movie o)) {
+      return false;
+    }
+    return this.title.equalsIgnoreCase(o.getTitle()) &&
+            this.director.getFirstName().equalsIgnoreCase(o.getDirector().getFirstName()) &&
+            this.director.getLastName().equalsIgnoreCase(o.getDirector().getLastName()) &&
+            this.year == o.getYear();
+  }
 }

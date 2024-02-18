@@ -17,8 +17,6 @@
       <sourceFolder url="file://$MODULE_DIR$/hw2/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/L4/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/L4/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/P4/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/P4/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/hw3/src" isTestSource="false" />
@@ -27,6 +25,10 @@
       <sourceFolder url="file://$MODULE_DIR$/hw3/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/L5/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/L5/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/P4&amp;6/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/P4&amp;6/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/P6/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/P6/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/L1/out" />
     </content>
     <orderEntry type="inheritedJdk" />
