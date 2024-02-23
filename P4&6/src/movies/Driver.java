@@ -21,7 +21,7 @@ public class Driver {
       Movie key = movies.get(i);
       int j = i - 1;
 
-      while (j >= 0 && movies.get(j).compareTo(key) > 0) {
+      while (j >= 0 && movies.get(j).getTitle().compareTo(key.getTitle()) > 0) {
         movies.set(j + 1, movies.get(j));
         j = j - 1;
       }
@@ -39,7 +39,7 @@ public class Driver {
       Movie key = movies.get(i);
       int j = i - 1;
 
-      while (j >= 0 && movies.get(j).compareTo(key) > 0) {
+      while (j >= 0 && movies.get(j).getDirector().toString().compareTo(key.getDirector().toString()) > 0) {
         movies.set(j + 1, movies.get(j));
         j = j - 1;
       }
@@ -57,7 +57,7 @@ public class Driver {
       Movie key = movies.get(i);
       int j = i - 1;
 
-      while (j >= 0 && movies.get(j).compareTo(key) > 0) {
+      while (j >= 0 && movies.get(j).getYear() > key.getYear()) {
         movies.set(j + 1, movies.get(j));
         j = j - 1;
       }
@@ -105,7 +105,7 @@ public class Driver {
   }
 
   public static void main(String[] args) throws IOException {
-    String csvFile = "/Users/robinhuang/Desktop/CS5010/P4&6/src/p6-longer_list_movies.csv";
+    String csvFile = "C:\\Users\\Robin\\Desktop\\CS5010\\P4&6\\src\\p6-longer_list_movies.csv";
     List<Movie> movies = readMoviesFromCSV(csvFile);
 
     System.out.println("Movies before sorting:");
@@ -115,7 +115,21 @@ public class Driver {
 
     sortTitle(movies);
 
-    System.out.println("\nMovies after sorting:");
+    System.out.println("\nMovies sorted by title:");
+    for (Movie movie : movies) {
+      System.out.println(movie);
+    }
+
+    sortDirector(movies);
+
+    System.out.println("\nMovies sorted by director:");
+    for (Movie movie : movies) {
+      System.out.println(movie);
+    }
+
+    sortYear(movies);
+
+    System.out.println("\nMovies sorted by year:");
     for (Movie movie : movies) {
       System.out.println(movie);
     }

@@ -1,4 +1,7 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import movies.Movie;
 import movies.Person;
@@ -66,6 +69,23 @@ public class MovieTest {
     assertEquals(0, theApartment.compareTo(test), 0);
   }
 
+  @Test public void testEquals() {
+    Movie test1 = new Movie("The Apartment", this.billyWilder, 1960);
+    Movie test2 = new Movie("The Apartment", this.billyWilder, 1960);
+    assertEquals(test1, test2);
+    test2 = new Movie("the apartment", this.billyWilder, 1960);
+    assertEquals(test1, test2);
+    test2 = new Movie("the apartment", new Person("billy", "wilder"), 1960);
+    assertEquals(test1, test2);
+    test2 = new Movie("the apartment", this.billyWilder, 1961);
+    assertNotEquals(test1, test2);
+    test2 = new Movie("the apartment2", this.billyWilder, 1960);
+    assertNotEquals(test1, test2);
+    test2 = new Movie("the apartment", new Person("billy2", "wilder"), 1960);
+    assertNotEquals(test1, test2);
+    test2 = new Movie("the apartment", new Person("billy", "wilder2"), 1960);
+    assertNotEquals(test1, test2);
+  }
 }
 
   
