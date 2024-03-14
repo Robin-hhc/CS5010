@@ -228,9 +228,53 @@ public class BSTNodeTest {
 
     }
 
+    // Test preorder traversal with an empty tree
+    @Test
+    public void testPreorderEmpty() {
+        BSTNode<Integer> root = new BSTEmptyNode<>();
+        List<Integer> actualList = new ArrayList<Integer>();
+        root.preorder(i -> actualList.add(i));
+        assertTrue(actualList.isEmpty());
+    }
 
+    // Test postorder traversal with a tree that has only left children
+    @Test
+    public void testPostorderLeftChildrenOnly() {
+        BSTNode<Integer> root = new BSTEmptyNode<>();
+        root = root.insert(10);
+        root = root.insert(8);
+        root = root.insert(6);
+        List<Integer> expectedList = Arrays.asList(6, 8, 10);
+        List<Integer> actualList = new ArrayList<Integer>();
+        root.postorder(i -> actualList.add(i));
+        assertEquals(expectedList, actualList);
+    }
 
+    // Test copy method to ensure the copied tree does not share nodes with the original
+    @Test
+    public void testCopyNoSharedNodes() {
+        BSTNode<Integer> root = new BSTEmptyNode<>();
+        root = root.insert(10);
+        root = root.insert(5);
+        root = root.insert(15);
+        BSTNode<Integer> copy = root.copy();
+        copy.insert(20); // Modify copy by adding a new element
+        assertFalse(root.contains(20)); // Original tree should not contain the new element
+    }
 
-
-
+    // Test sameness with a tree that is structurally different but contains same elements
+    @Test
+    public void testSamenessStructurallyDifferent() {
+        BSTNode<Integer> root1 = new BSTEmptyNode<>();
+        BSTNode<Integer> root2 = new BSTEmptyNode<>();
+        // Tree 1
+        root1 = root1.insert(10);
+        root1 = root1.insert(5);
+        root1 = root1.insert(15);
+        // Tree 2
+        root2 = root2.insert(15);
+        root2 = root2.insert(10);
+        root2 = root2.insert(5);
+        assertFalse(root1.same(root2));
+    }
 }

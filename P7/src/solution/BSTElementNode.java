@@ -1,5 +1,7 @@
 package solution;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -103,6 +105,10 @@ public class BSTElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   @Override
   public boolean same(BSTNode<T> other) {
-    return Objects.equals(this.toString(), other.toString());
+    List<T> thisList = new ArrayList<T>();
+    List<T> otherList = new ArrayList<T>();
+    this.preorder(i -> thisList.add(i));
+    other.preorder(i -> otherList.add(i));
+    return thisList.equals(otherList);
   }
 }
