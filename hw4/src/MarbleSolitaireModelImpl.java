@@ -1,24 +1,25 @@
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 /**
  * A class that represents a Marble Solitaire game object.
  */
 public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
-  Integer[][] board;
+  private Integer[][] board;
+  private final int size;
+  private int score;
+  private static final int INVALID = 2;
+  private static final int MARBLE = 1;
+  private static final int EMPTY = 0;
 
   /**
    * Default constructor for no input. Initialize the game board as arm thickness 3 with the empty
    * slot at the center).
    */
   public MarbleSolitaireModelImpl() {
-    this.board = new Integer[][] {{2, 2, 1, 1, 1, 2, 2},
-                                  {2, 2, 1, 1, 1, 2, 2},
-                                  {1, 1, 1, 1, 1, 1, 1},
-                                  {1, 1, 1, 0, 1, 1, 1},
-                                  {1, 1, 1, 1, 1, 1, 1},
-                                  {2, 2, 1, 1, 1, 2, 2},
-                                  {2, 2, 1, 1, 1, 2, 2}};
+    this(3, 3, 3);
   }
 
   /**
@@ -30,17 +31,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @throws IllegalArgumentException
    */
   public MarbleSolitaireModelImpl(int emptyRow, int emptyColumn) throws IllegalArgumentException {
-    this.board = new Integer[][] {{2, 2, 1, 1, 1, 2, 2},
-                                  {2, 2, 1, 1, 1, 2, 2},
-                                  {1, 1, 1, 1, 1, 1, 1},
-                                  {1, 1, 1, 1, 1, 1, 1},
-                                  {1, 1, 1, 1, 1, 1, 1},
-                                  {2, 2, 1, 1, 1, 2, 2},
-                                  {2, 2, 1, 1, 1, 2, 2}};
-    if (emptyRow < 0 || emptyRow >= 7 || emptyColumn < 0 || emptyColumn >= 7 || this.board[emptyRow][emptyColumn] != 1) {
-      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)", emptyRow, emptyColumn));
-    }
-    this.board[emptyRow][emptyColumn] = 0;
+    this(3, emptyRow, emptyColumn);
   }
 
   /**
@@ -50,22 +41,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @throws IllegalArgumentException
    */
   public MarbleSolitaireModelImpl(int armNum) throws IllegalArgumentException {
-    if (armNum <= 0 || armNum % 2 == 0) {
-      throw new IllegalArgumentException("Arm thickness can not be even.");
-    }
-    int len = 3*armNum-2;
-    this.board = new Integer[len][len];
-    for (int i = 1; i < len; i++) {
-      for (int j = 1; j < len; j++) {
-        if ((i < armNum-1 || len-i <= armNum-1) && (j < armNum-1 || len-j <= armNum-1)) {
-          this.board[i][j] = 2;
-        } else if (i == len/2 && j == len/2) {
-          this.board[i][j] = 0;
-        } else {
-          this.board[i][j] = 1;
-        }
-      }
-    }
+    this(armNum, (armNum * 3 - 2) / 2, (armNum * 3 - 2) / 2);
   }
 
   /**
@@ -81,40 +57,88 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     if (armNum <= 0 || armNum % 2 == 0) {
       throw new IllegalArgumentException("Arm thickness can not be even.");
     }
-    int len = 3*armNum-2;
-    this.board = new Integer[len][len];
-    for (int i = 1; i < len; i++) {
-      for (int j = 1; j < len; j++) {
-        if ((i < armNum-1 || len-i <= armNum-1) && (j < armNum-1 || len-j <= armNum-1)) {
-          this.board[i][j] = 2;
+    this.size = 3*armNum-2;
+    this.score = 4*armNum*armNum-4;
+    this.board = new Integer[size][size];
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        if ((i < armNum-1 || size-i <= armNum-1) && (j < armNum-1 || size-j <= armNum-1)) {
+          this.board[i][j] = INVALID;
         } else {
-          this.board[i][j] = 1;
+          this.board[i][j] = MARBLE;
         }
       }
     }
-    if (emptyRow < 0 || emptyRow >= len || emptyColumn < 0 || emptyColumn >= len || this.board[emptyRow][emptyColumn] != 1) {
+    if (emptyRow < 0 || emptyRow >= size || emptyColumn < 0 || emptyColumn >= size || this.board[emptyRow][emptyColumn] != MARBLE) {
       throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)", emptyRow, emptyColumn));
     }
-    this.board[emptyRow][emptyColumn] = 0;
+    this.board[emptyRow][emptyColumn] = EMPTY;
   }
 
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
+    if (!isValidMove(fromRow, fromCol, toRow, toCol)) {
+      throw new IllegalArgumentException("Invalid move.");
+    }
+    board[(toRow+fromRow)/2][(toCol+fromCol)/2] = EMPTY;
+    board[toRow][toCol] = MARBLE;
+    board[fromRow][fromCol] = EMPTY;
+    score--;
+  }
 
+  private boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol) {
+    // Check if from and to positions are on the board and the move is strictly vertical or horizontal
+    if ((fromRow < 0 || fromRow >= size || fromCol < 0 || fromCol >= size) ||
+            (toRow < 0 || toRow >= size || toCol < 0 || toCol >= size) ||
+            this.board[fromRow][fromCol] != MARBLE || this.board[toRow][toCol] != EMPTY ||
+            !((toRow == fromRow && abs(toCol-fromCol) == 2) || (toCol == fromCol && abs(toRow-fromRow) == 2))) {
+      return false;
+    }
+    // Check if there is a marble in the middle position
+    return this.board[(fromRow + toRow) / 2][(fromCol + toCol) / 2] == MARBLE;
   }
 
   @Override
   public boolean isGameOver() {
-    return false;
+    for (int row = 0; row < size; row++) {
+      for (int col = 0; col < size; col++) {
+        // For each marble, check if a move is possible
+        if (board[row][col] == 1) {
+          // Check all four directions for a valid move
+          if (isValidMove(row, col, row + 2, col) ||
+                  isValidMove(row, col, row - 2, col) ||
+                  isValidMove(row, col, row, col + 2) ||
+                  isValidMove(row, col, row, col - 2)) {
+            return false; // Found at least one valid move, so game is not over
+          }
+        }
+      }
+    }
+    return true; // No valid moves found, game is over
   }
 
   @Override
   public String getGameState() {
-    return null;
+    StringBuilder msg = new StringBuilder(2*size*size);
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        if (board[i][j] == MARBLE) {
+          msg.append("O ");
+        } else if (board[i][j] == EMPTY) {
+          msg.append("_ ");
+        } else {
+          msg.append("  ");
+        }
+      }
+      msg.deleteCharAt(msg.length()-1);
+      msg.append("\n");
+    }
+    msg.deleteCharAt(msg.length()-1);
+    return msg.toString();
   }
 
   @Override
   public int getScore() {
-    return 0;
+    return score;
   }
 }
