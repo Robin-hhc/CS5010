@@ -1,0 +1,15 @@
+Situation 1
+Q1) Is there a SOLID principle being followed here? If yes, explain why.
+The class diagram does not adhere to the Single Responsibility Principle, as the AbstractShape has two responsibilities: maintaining the shape's structure as well as comparing it with other shapes.
+
+Situation 2
+Q1) Do you think this implementation follows SOLID principles?
+It doesn’t follow the SOLID principles.
+
+Q2) If not, a) can you identify the principle(s) we are breaking and b) a way to improve the design?
+a)This example does not satisfy the Liskov Substitution Principle because, according to this principle, objects of a subclass should be able to replace objects of a superclass without altering the correctness of the program. However, passing in a Fish will throw an exception, which affects the behavior of the program.Additionally, this also violates the Interface Segregation Principle because the Fish class implements methods it does not need.
+b)We could remove the makeNoise method from Animal since not all animals are capable of making noise. Additionally, we can create an interface for animals that do make noise and then have only the animals that produce noise implement this interface.
+
+Situation 3
+Q1) How would you redesign your current implementation so that you a) meet the requirements and b) do not break any SOLID principles?
+We can create a new interface that includes the setColor() and getColor() methods, and then we can have shapes that require color to implement this interface.
