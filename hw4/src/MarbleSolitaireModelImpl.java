@@ -1,6 +1,5 @@
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
-
 import static java.lang.Math.abs;
 
 /**
@@ -55,7 +54,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    */
   public MarbleSolitaireModelImpl(int armNum, int emptyRow, int emptyColumn) throws IllegalArgumentException {
     if (armNum <= 0 || armNum % 2 == 0) {
-      throw new IllegalArgumentException("Arm thickness can not be even.");
+      throw new IllegalArgumentException("Arm thickness not valid.");
     }
     this.size = 3*armNum-2;
     this.score = 4*armNum*armNum-4;
@@ -78,7 +77,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
     if (!isValidMove(fromRow, fromCol, toRow, toCol)) {
-      throw new IllegalArgumentException("Invalid move.");
+      throw new IllegalArgumentException("Invalid move");
     }
     board[(toRow+fromRow)/2][(toCol+fromCol)/2] = EMPTY;
     board[toRow][toCol] = MARBLE;
@@ -86,15 +85,27 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     score--;
   }
 
+  /**
+   * Helper function to check if a move is valid or not. Check for if two points in the board, if
+   * form point have a marble, to point is empty, the two points have is only 1 step away from
+   * each other vertically or horizontally and there is a marble in between them.
+   * @param fromRow the row number of the position to be moved from
+   * (starts at 0)
+   * @param fromCol the column number of the position to be moved from
+   * (starts at 0)
+   * @param toRow the row number of the position to be moved to
+   * (starts at 0)
+   * @param toCol the column number of the position to be moved to
+   * (starts at 0)
+   * @return true if the move is valid. False otherwise.
+   */
   private boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol) {
-    // Check if from and to positions are on the board and the move is strictly vertical or horizontal
     if ((fromRow < 0 || fromRow >= size || fromCol < 0 || fromCol >= size) ||
             (toRow < 0 || toRow >= size || toCol < 0 || toCol >= size) ||
             this.board[fromRow][fromCol] != MARBLE || this.board[toRow][toCol] != EMPTY ||
             !((toRow == fromRow && abs(toCol-fromCol) == 2) || (toCol == fromCol && abs(toRow-fromRow) == 2))) {
       return false;
     }
-    // Check if there is a marble in the middle position
     return this.board[(fromRow + toRow) / 2][(fromCol + toCol) / 2] == MARBLE;
   }
 
@@ -114,7 +125,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
         }
       }
     }
-    return true; // No valid moves found, game is over
+    return true;
   }
 
   @Override
