@@ -1,11 +1,6 @@
 package tictactoe;
 import static org.junit.Assert.assertEquals;
 
-import tictactoe.FailingAppendable;
-import tictactoe.TicTacToe;
-import tictactoe.TicTacToeConsoleController;
-import tictactoe.TicTacToeController;
-import tictactoe.TicTacToeModel;
 import java.io.StringReader;
 import java.util.Arrays;
 import org.junit.Before;
@@ -41,7 +36,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testGameCompletionWithWinner() {
     StringReader input = new StringReader("1 1 1 2 2 2 1 3 3 3");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     System.out.print(log);
     assertTrue(log.toString().contains("Game is over! X wins."));
@@ -50,7 +45,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testQuitInsteadOfRow() {
     StringReader input = new StringReader("q");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals(12, lines.length);
@@ -67,7 +62,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testQuitInsteadOfCol() {
     StringReader input = new StringReader("1 q");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals(12, lines.length);
@@ -84,7 +79,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testNonIntegerInputForRow() {
     StringReader input = new StringReader("two 2");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals("Not a valid number: two", lines[6]);
@@ -93,7 +88,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testNonIntegerInputForCol() {
     StringReader input = new StringReader("2 two");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals("Not a valid number: two", lines[6]);
@@ -102,7 +97,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testMoveOutOfBounds() {
     StringReader input = new StringReader("4 4");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals("Not a valid move: 4, 4", lines[6]);
@@ -111,7 +106,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testMoveToOccupiedCell() {
     StringReader input = new StringReader("1 1 1 1 q");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals("Not a valid move: 1, 1", lines[12]);
@@ -120,7 +115,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testMultipleInvalidMoves() {
     StringReader input = new StringReader("1 1 0 0 1 1 one 1 1 one q");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     String[] lines = log.toString().split("\n");
     assertEquals("Not a valid move: 0, 0", lines[12]);
@@ -132,7 +127,7 @@ public class TicTacToeControllerTest {
   @Test
   public void testValidMovesInterspersedWithInvalidMoves() {
     StringReader input = new StringReader("1 1 0 0 1 2 1 1 2 1 one 1 1 one 1 3 3 1 q");
-    TicTacToeController controller = new TicTacToeConsoleController(input, log);
+    TicTacToeController controller = new SwingTicTacToeController(input, log);
     controller.playGame(model);
     assertEquals("   |   |  \n"
             + "-----------\n"
@@ -180,7 +175,7 @@ public class TicTacToeControllerTest {
   public void testInputEndsAbruptly() {
     StringReader input = new StringReader("1 1 1 2"); // No more input after valid moves, no quit command
     Appendable failingLog = new FailingAppendable();
-    TicTacToeController controller = new TicTacToeConsoleController(input, failingLog);
+    TicTacToeController controller = new SwingTicTacToeController(input, failingLog);
     controller.playGame(model);
   }
 
@@ -188,7 +183,7 @@ public class TicTacToeControllerTest {
   public void testSingleValidMove() {
     TicTacToe m = new TicTacToeModel();
     StringBuilder gameLog = new StringBuilder();
-    TicTacToeController c = new TicTacToeConsoleController(new StringReader("2 2 q"), gameLog);
+    TicTacToeController c = new SwingTicTacToeController(new StringReader("2 2 q"), gameLog);
     c.playGame(m);
     assertEquals("   |   |  \n"
         + "-----------\n"
@@ -215,7 +210,7 @@ public class TicTacToeControllerTest {
     TicTacToe m = new TicTacToeModel();
     StringReader input = new StringReader("!#$ 2 q");
     StringBuilder gameLog = new StringBuilder();
-    TicTacToeController c = new TicTacToeConsoleController(input, gameLog);
+    TicTacToeController c = new SwingTicTacToeController(input, gameLog);
     c.playGame(m);
     // split the output into an array of lines
     String[] lines = gameLog.toString().split("\n");
@@ -239,7 +234,7 @@ public class TicTacToeControllerTest {
     // note the entire sequence of user inputs for the entire game is in this one string:
     StringReader input = new StringReader("2 2 1 1 3 3 1 2 1 3 2 3 2 1 3 1 3 2");
     StringBuilder gameLog = new StringBuilder();
-    TicTacToeController c = new TicTacToeConsoleController(input, gameLog);
+    TicTacToeController c = new SwingTicTacToeController(input, gameLog);
     c.playGame(m);
     String[] lines = gameLog.toString().split("\n");
     assertEquals(60, lines.length);
@@ -251,7 +246,7 @@ public class TicTacToeControllerTest {
     TicTacToe m = new TicTacToeModel();
     StringReader input = new StringReader("2 2 1 1 3 3 1 2 1 3 2 3 2 1 3 1 3 2");
     Appendable gameLog = new FailingAppendable();
-    TicTacToeController c = new TicTacToeConsoleController(input, gameLog);
+    TicTacToeController c = new SwingTicTacToeController(input, gameLog);
     c.playGame(m);
   }
 
